@@ -1,6 +1,89 @@
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
 body {
     background-color: #333;
-    color:#fff;
+    color:#f8f8f2;
     font-family: "Roboto", sans-serif;
     margin:0;
+    transition:2s;
+    -webkit-animation: fadein 2.0s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 2.0s; /* Firefox < 16 */
+        -ms-animation: fadein 2.0s; /* Internet Explorer */
+         -o-animation: fadein 2.0s; /* Opera < 12.1 */
+            animation: fadein 2.0s;
+}
+.copyrightContainer{
+    position: fixed;
+    left: 50%;
+    bottom: 0.2rem;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+}
+.copyrightContainerText{
+    display:flex;
+    margin:0 auto;
+    justify-content: center;
+}
+.loginButtonDiv{
+    display:flex;
+    margin:0 auto;
+    justify-content: center;
+    margin-top:24%;
+}
+.signXSpan{
+    color:#ff5555;
+}
+.buttonsDivContainer {
+    height:100%;
+}
+.classesButtons {
+    margin:0 auto;
+    margin-top:0.5rem;
+    width:75%;
+    height:100%;
+}
+.classesButtonsContainer {
+    text-align: center;
+    height:100%;
+    border:3px solid #ff5555;
+    border-radius: 50px;
+}
+.classesButtonButton {
+    width: 50%;
+    border:3px solid #ff5555;
+    background: transparent;
+    padding: 15px 30px;
+    border-radius:50px;
+    outline:none;
+    font-size:2rem;
+    color:#f8f8f2;
+    margin-top:2px;
+    margin-bottom:2px;
+    transition:0.3s;
+}
+.classesButtonButton:hover {
+    transition:0.3s;
+    background-color: #6e6b6c;
+    color:#ff5555;
 }

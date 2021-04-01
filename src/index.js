@@ -1,19 +1,40 @@
-//firebase.auth().signInWithPopup(provider);
-function test() {
+//var firebase = firebase.database();
+var userName = '';
+function signInUser() {
   var provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth()
   .signInWithPopup(provider)
   .then((result) => {
+    userName = result.user.displayName;
+    console.log(userName)
     /** @type {firebase.auth.OAuthCredential} */
-    var credential = result.credential;
-
-    // This gives you a Google Access Token. You can use it to access the Google API.
-    var token = credential.accessToken;
-    // The signed-in user info.
-    var user = result.user;
-    console.log(user)
-    // ...
-  }).catch((error) => {
+    
+    document.getElementById('signUpInButton').innerHTML = `<span class='signXSpan' id='signUpSpan'>Logout </span>`;
+    document.getElementById('signUpInButton').onclick = () => {
+      firebase.auth().signOut();
+      location.reload();
+      return false;
+    }
+  }).then(
+    function () {
+      var classesRef = firebase.database().ref('users/' + userName + '/');
+      classesRef.on('child_added', updateClasses);
+      firebase.database().ref('users/').once('value').then(
+        (snapshot) => {
+          if (!snapshot.exists()) {
+            let classTest = {
+              name: 'Google.com',
+              link: 'https://google.com'
+            };
+            firebase.database().ref('users/' + userName + '/').push(classTest);
+          }
+          else {
+            console.log('User already exists');
+          }
+        }
+      )
+    }
+  ).catch((error) => {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -24,4 +45,16 @@ function test() {
     // ...
   });
 }
-console.log('in file');
+const updateClasses = data => {
+  const {name, link} = data.val()
+  console.log(data.val())
+  
+    let newClassDiv = `
+    <div class='classesButtonClass'>
+      <button class='classesButtonButton' onclick = "window.open('${link}')">
+        ${name}
+      </button>
+    </div>
+    `;
+    document.getElementById('classesButtonDOM').innerHTML += newClassDiv;
+}
