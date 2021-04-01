@@ -8,7 +8,7 @@ function signInUser() {
     userName = result.user.displayName;
     console.log(userName)
     /** @type {firebase.auth.OAuthCredential} */
-    
+
     document.getElementById('signUpInButton').innerHTML = `<span class='signXSpan' id='signUpSpan'>Logout </span>`;
     document.getElementById('signUpInButton').onclick = () => {
       firebase.auth().signOut();
@@ -35,6 +35,7 @@ function signInUser() {
       )
     }
   ).catch((error) => {
+
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
@@ -45,6 +46,7 @@ function signInUser() {
     // ...
   });
 }
+
 const updateClasses = data => {
   const {name, link} = data.val()
   console.log(data.val())
@@ -58,3 +60,4 @@ const updateClasses = data => {
     `;
     document.getElementById('classesButtonDOM').innerHTML += newClassDiv;
 }
+
