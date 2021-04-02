@@ -33,6 +33,12 @@ body {
          -o-animation: fadein 2.0s; /* Opera < 12.1 */
             animation: fadein 2.0s;
 }
+::selection {
+    background: #ff5555; /* WebKit/Blink Browsers */
+  }
+  ::-moz-selection {
+    background: #ff5555; /* Gecko Browsers */
+  }
 .copyrightContainer{
     position: fixed;
     left: 50%;
@@ -89,4 +95,10 @@ body {
     transition:0.3s;
     background-color: #6e6b6c;
     color:#ff5555;
+}
+.removeButton {
+    color:#ff5555;
+    margin-left:10px;
+    position:absolute;
+    margin-top:30px;
 }

@@ -52,18 +52,39 @@ function signInUser() {
 }
 
 const updateClasses = data => {
-  var allClasses = firebase.database().ref('users/' + userName + '/');
-  console.log(data.val())
   const {link, name} = data.val();
-  
+  var path;
+  firebase.database().ref('users/' + userName + '/').once('value').then(
+    (snapshot) => {
+      var numChildren = snapshot.numChildren()
+      
+      var childKeyStringify = JSON.stringify(snapshot.val());
+      var newObject = JSON.parse(childKeyStringify);
+      const values = Object.values(newObject);
+      for (k = 0; k < (numChildren); k++) {
+        if (values[k].name == (name)) {
+          path = Object.keys(snapshot.val())[k];
+          break
+        }
+      }
+    }
+  ).then(
+    () => {
     let newClassDiv = `
+    <div id='${path}'>
     <div class='classesButtonClass'>
       <button class='classesButtonButton' onclick = 'window.open("${link}", "_blank")'>
         ${name}
       </button>
+      <button type="button" class="close removeButton" aria-label="Close" onclick="removeClass('${path}')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+    </div>
     </div>
     `;
     document.getElementById('classesButtonDOM').innerHTML += newClassDiv;
+    }
+  )
 }
 
 function openClassLink(link){
@@ -90,6 +111,10 @@ document.getElementById('addClassModalButton').addEventListener('click', () => {
     document.getElementById('launchAddClassForm').click()
   }
 });
-document.getElementById('removeClass').addEventListener('click', (id) =>{
 
-})
+function removeClass(path){
+  let ref = firebase.database().ref('users/' + userName + '/');
+  document.getElementById(path).style.opacity = '0';
+  $('#' + path).remove();
+  ref.child(path).remove();
+}
